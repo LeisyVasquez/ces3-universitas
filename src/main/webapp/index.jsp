@@ -124,7 +124,6 @@
                 </div>
                 <%
                     } else {
-                        System.out.println("hi" + Arrays.toString(arrayReverse));
                 %>
                 <div class="column is-4-desktop has-text-centered hidden-on-tablet">
                     <img src="media/images/no.gif" class="img-fluid" alt="">
@@ -145,19 +144,6 @@
 
 </section>
 <!-- /banner -->
-
-
-<!-- call to action -->
-<%
-    if (word != null && words.length < 1) {
-%>
-<section class="section">
-
-</section>
-<%
-    }
-%>
-<!-- /call to action -->
 
 <!-- plugins -->
 <script src="media/js/jquery.min.js"></script>
