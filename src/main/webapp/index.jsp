@@ -1,10 +1,12 @@
+
 <%@ page import="java.util.Arrays" %>
+<%@ page import="java.text.Normalizer" %>
+<%@ page import="java.util.regex.Pattern" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 
 <%
-    String word = request.getParameter("word").toLowerCase().trim();
-    String[] words = {};
+    String word = request.getParameter("word");
 %>
 
 <!DOCTYPE html>
@@ -16,7 +18,7 @@
 // GITHUB: https://github.com/themefisher/
 -->
 
-<html lang="zxx">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
@@ -62,7 +64,7 @@
 //]]></script>
 
 <!-- banner -->
-<section class="section pb-0">
+<section class="section mt-1">
     <div class="container">
         <div class="columns is-justify-content-space-between is-align-items-center">
             <div class="column is-7-desktop has-text-centered-mobile has-text-centered-tablet has-text-left-desktop">
@@ -76,32 +78,31 @@
                 </form>
             </div>
             <div class="column is-4-desktop hidden-on-tablet">
-                <img src="media/images/banner.jpg" alt="illustration" class="img-fluid">
+                <img src="media/images/banner.jpg" alt="illustration" class="img-fluid" width="210px">
             </div>
 
         </div>
         <%
             if (word != null) {
-                words = word.split(" ");
-                if (words.length > 1) {
         %>
-        <h4 style="color: #da1039">Hay varias palabras, solo puede ser una</h4>
-        <%
-        } else {
-        %>
-        <div class="column is-7-desktop has-text-centered-mobile has-text-centered-tablet has-text-left-desktop">
+        <div class="column is-7-desktop has-text-centered-mobile has-text-centered-tablet has-text-left-desktop mt-5">
             <h4 class="mb-5">Palabra ingresada</h4>
             <div class="table-container table is-bordered">
                 <table class="table">
                     <tbody>
                     <tr>
                         <%
+                            word = word.replaceAll("\\s", "");
+                            word = Normalizer.normalize(word, Normalizer.Form.NFD);
+                            word = word.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+                            word = word.replaceAll("[^a-zA-Z0-9]", "");
+                            word = word.toLowerCase();
                             String[] arrayWord = word.split("");
                             String[] arrayReverse = new String[arrayWord.length];
                             for (int i = 0; i < arrayWord.length; i++) {
                                 arrayReverse[i] = arrayWord[arrayWord.length - 1 - i];
                         %>
-                        <td><%= arrayWord[i]%>
+                        <td><%= arrayWord[i] %>
                         </td>
                         <%
                             }
@@ -117,19 +118,19 @@
                     if (Arrays.equals(arrayReverse, arrayWord)) {
                 %>
                 <div class="column is-4-desktop has-text-centered hidden-on-tablet">
-                    <img src="media/images/si.gif" class="img-fluid" alt="">
+                    <img src="media/images/si.gif" class="img-fluid" alt="" width="200px">
                 </div>
                 <div class="column is-8-desktop has-text-centered-mobile has-text-centered-tablet has-text-left-desktop">
-                    <h2 class="mb-3">Es un palíndromo</h2>
+                    <h2>Es un palíndromo</h2>
                 </div>
                 <%
                     } else {
                 %>
                 <div class="column is-4-desktop has-text-centered hidden-on-tablet">
-                    <img src="media/images/no.gif" class="img-fluid" alt="">
+                    <img src="media/images/no.gif" class="img-fluid" alt="" width="200px">
                 </div>
                 <div class="column is-8-desktop has-text-centered-mobile has-text-centered-tablet has-text-left-desktop">
-                    <h2 class="mb-3">No es un palíndromo</h2>
+                    <h2>No es un palíndromo</h2>
                 </div>
                 <%
                     }
@@ -137,7 +138,6 @@
             </div>
         </div>
         <%
-                }
             }
         %>
     </div>
