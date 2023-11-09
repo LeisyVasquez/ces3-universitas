@@ -97,7 +97,7 @@ public class StudentServlet extends MyServlet {
             if (studentResult != null) {
                 out.println(this.gson.toJson(studentResult));
             } else {
-                out.println("[]");
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             }
 
         }
