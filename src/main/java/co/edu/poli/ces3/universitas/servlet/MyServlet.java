@@ -19,7 +19,6 @@ public abstract class MyServlet extends HttpServlet {
             line = reader.readLine();
         }
         reader.close();
-
         return JsonParser.parseString(sb.toString()).getAsJsonObject();
     }
 }
